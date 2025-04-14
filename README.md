@@ -40,6 +40,12 @@ pip install mcpo
 mcpo --port 8000 --api-key "top-secret" -- your_mcp_server_command
 ```
 
+To use an SSE-compatible MCP server, simply specify the server type and endpoint:
+
+```bash
+mcpo --port 8000 --api-key "top-secret" --server-type "sse" -- http://127.0.0.1:8001/sse
+```
+
 You can also run mcpo via Docker with no installation:
 
 ```bash
@@ -78,7 +84,10 @@ Example config.json:
     "time": {
       "command": "uvx",
       "args": ["mcp-server-time", "--local-timezone=America/New_York"]
-    }
+    },
+    "mcp_sse": {
+      "url": "http://127.0.0.1:8001/sse"
+    } // SSE MCP Server
   }
 }
 ```
@@ -110,7 +119,7 @@ To contribute or run tests locally:
 
 2.  **Run tests:**
     ```bash
-    pytest
+    uv run pytest
     ```
 
 
@@ -132,5 +141,17 @@ Getting started is easy:
 - Open a pull request
 
 Not sure where to start? Feel free to open an issue or ask a question—we’re happy to help you find a good first task.
+
+## ✨ Star History
+
+<a href="https://star-history.com/#open-webui/mcpo&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=open-webui/mcpo&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=open-webui/mcpo&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=open-webui/mcpo&type=Date" />
+  </picture>
+</a>
+
+---
 
 ✨ Let's build the future of interoperable AI tooling together!

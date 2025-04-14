@@ -33,7 +33,10 @@ def main(
         Optional[str],
         typer.Option("--env-path", help="Path to environment variables file"),
     ] = None,
-    config: Annotated[
+    server_type: Annotated[
+        Optional[str], typer.Option("--type", "--server-type", help="Server type")
+    ] = "stdio",
+    config_path: Annotated[
         Optional[str], typer.Option("--config", "-c", help="Config file path")
     ] = None,
     name: Annotated[
@@ -56,7 +59,7 @@ def main(
     ] = None,
 ):
     server_command = None
-    if not config:
+    if not config_path:
         # Find the position of "--"
         if "--" not in sys.argv:
             typer.echo("Usage: mcpo --host 0.0.0.0 --port 8000 -- your_mcp_command")
@@ -71,8 +74,8 @@ def main(
 
     from mcpo.main import run
 
-    if config:
-        print("Starting MCP OpenAPI Proxy with config file:", config)
+    if config_path:
+        print("Starting MCP OpenAPI Proxy with config file:", config_path)
     else:
         print(
             f"Starting MCP OpenAPI Proxy on {host}:{port} with command: {' '.join(server_command)}"
@@ -114,7 +117,8 @@ def main(
             port,
             api_key=api_key,
             cors_allow_origins=cors_allow_origins,
-            config=config,
+            server_type=server_type,
+            config_path=config_path,
             name=name,
             description=description,
             version=version,
