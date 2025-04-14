@@ -11,7 +11,7 @@ services:
     volumes:
       - ./config.json:/app/config.json # Mounting the config.json into the container
     environment:
-      - GITHUB_PERSONAL_ACCESS_TOKEN=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 # Replace with an appropriate token
+      - GITHUB_PERSONAL_ACCESS_TOKEN=hp_bPdjrRMqW8m5LoxknWxzP3uieME7zX4ZBHw6 # Replace with an appropriate token
     command: mcpo --config /app/config.json
     depends_on:
       - filesystem
