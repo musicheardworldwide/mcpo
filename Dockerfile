@@ -1,12 +1,13 @@
 FROM python:3.12-slim-bookworm
 
-# Install uv (from official binary), nodejs, npm, and git
+# Install uv (from official binary), nodejs, npm, git, and docker
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
     ca-certificates \
+    docker.io \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js and npm via NodeSource 
@@ -17,7 +18,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
 # Confirm npm and node versions (optional debugging info)
 RUN node -v && npm -v
 
-# Copy your mcpo source code (assuming in src/mcpo)
+# Copy your mcpo source code
 COPY . /app
 WORKDIR /app
 
@@ -32,11 +33,11 @@ RUN uv pip install . && rm -rf ~/.cache
 # Verify mcpo installed correctly
 RUN which mcpo
 
-# Expose port (optional but common default)
-EXPOSE 8000
+# Add config.json to the container
+COPY config.json /app/config.json
+
+# Expose ports for all services in config.json
+EXPOSE 8000  # Add additional ports as required
 
 # Entrypoint set for easy container invocation
-ENTRYPOINT ["mcpo"]
-
-# Default help CMD (can override at runtime)
-CMD ["--help"]
+ENTRYPOINT ["mcpo", "--config", "/app/config.json"]

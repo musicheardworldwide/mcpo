@@ -1,0 +1,50 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/filesystem",
+        "."
+      ]
+    },
+    "basic-memory": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/basic-memory"
+      ]
+    },
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN=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",
+        "mcp/github"
+      ],
+      "env": {}
+    },
+    "sequentialthinking": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/sequentialthinking"
+      ]
+    },
+    "github.com/pashpashpash/mcp-taskmanager": {
+      "command": "node",
+      "args": [
+        "/home/wesmane/Documents/Cline/MCP/mcp-taskmanager/dist/index.js"
+      ]
+    }
+  }
+}

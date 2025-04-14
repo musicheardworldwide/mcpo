@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  mcpo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcpo_server
+    ports:
+      - "8000:8000" # Default port for mcpo; add more if needed for other services
+    volumes:
+      - ./config.json:/app/config.json # Mounting the config.json into the container
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=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 # Replace with an appropriate token
+    command: mcpo --config /app/config.json
+    depends_on:
+      - filesystem
+      - basic-memory
+      - github
+      - sequentialthinking
+      - taskmanager
+
+  # Example service for filesystem server
+  filesystem:
+    image: mcp/filesystem
+    container_name: filesystem_service
+    stdin_open: true
+    tty: true
+
+  # Example service for basic-memory server
+  basic-memory:
+    image: mcp/basic-memory
+    container_name: basic_memory_service
+    stdin_open: true
+    tty: true
+
+  # Example service for github server
+  github:
+    image: mcp/github
+    container_name: github_service
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=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 # Replace with an appropriate token
+    stdin_open: true
+    tty: true
+
+  # Example service for sequentialthinking server
+  sequentialthinking:
+    image: mcp/sequentialthinking
+    container_name: sequentialthinking_service
+    stdin_open: true
+    tty: true
+
+  # Example service for taskmanager
+  taskmanager:
+    image: node:current-slim
+    container_name: taskmanager_service
+    working_dir: /usr/src/app
+    volumes:
+      - /home/wesmane/Documents/Cline/MCP/mcp-taskmanager:/usr/src/app
+    command: node dist/index.js
+    stdin_open: true
+    tty: true
